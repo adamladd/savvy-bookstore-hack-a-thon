@@ -56,20 +56,21 @@ function render(){
         .addEventListener(
             'submit',
             (event) => {
-                var data = event.target.elements;
-                var newProduct = {
-                    'name': data[0].value,
-                    'author': data[1].value,
-                    'pictureURL': data[2].value,
-                    'price': data[3].value,
-                    'sellingPoints': data[4].value.split(',')
-                };
-
-                books[books.length] = newProduct;
-
-                render(books);
+            var newProduct = event
+                .target
+                .elements
+                .reduce(
+                    (acc, product) => {
+                        acc[product.name] = product.value;
+                    }
+                )
+                return acc;
             }
-        );
+        )
+        
+    books.push(newProduct);
+        
+    render(books);
 }
 
 render();
